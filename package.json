@@ -1,0 +1,42 @@
+{
+  "name": "node-api-boilerplate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "webpack && node ./dist/bundle.js",
+    "dev": "NODE_ENV=local PORT=9000 nodemon -r esm app.js",
+    "dev-local": "NODE_ENV=local PORT=9000 env-cmd nodemon -r esm app.js",
+    "dev:server:win": "SET NODE_ENV=server & env-cmd .env.dev nodemon -r esm app.js",
+    "dev:server:lin": "NODE_ENV=server env-cmd .env.dev nodemon -r esm app.js",
+    "lint": "eslint"
+  },
+  "author": "mustafa shaikh",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-modules-commonjs": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "babel": "^6.23.0",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "env-cmd": "^10.0.1",
+    "eslint": "^6.8.0",
+    "eslint-loader": "^3.0.3",
+    "husky": "^4.2.1",
+    "nodemon-webpack-plugin": "^4.2.2",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.11",
+    "passport": "^0.4.1"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "semi": ["warn", "never"],
+    "no-unreachable": "warn",
+    "valid-typeof": "warn",
+    "eqeqeq": "warn",
+    "camelcase": [
+      "warn",
+      {
+        "ignoreDestructuring": true
+      }
+    ],
+    "indent": ["warn", 2],
+    "no-nested-ternary": "warn",
+    "no-const-assign": "warn",
+    "no-dupe-class-members": "warn",
+    "no-duplicate-imports": "warn",
+    "no-var": "warn",
+    "prefer-arrow-callback": "warn",
+    "prefer-template": "warn",
+    "no-console": "warn"
+  }
+}

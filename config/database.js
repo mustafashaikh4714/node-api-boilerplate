@@ -7,7 +7,7 @@ mongoose.set('useUnifiedTopology', true)
 
 const { NODE_ENV } = process.env
 
-if (NODE_ENV === 'local' || 'development') {
+if (NODE_ENV === 'local' || NODE_ENV === 'development') {
   module.exports = () => {
     return mongoose.connect('mongodb://127.0.0.1:27017/test-database')
   }

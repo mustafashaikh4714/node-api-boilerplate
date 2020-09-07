@@ -1,2 +1,3 @@
 # node-api-boilerplate
-created boilerplate for real world node applications.
+
+created boilerplate for real world node applications 😎.

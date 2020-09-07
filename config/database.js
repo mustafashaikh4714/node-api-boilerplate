@@ -5,13 +5,13 @@ mongoose.set('useFindAndModify', false)
 mongoose.set('useCreateIndex', true)
 mongoose.set('useUnifiedTopology', true)
 
-const { NODE_ENV } = process.env
-
-if (NODE_ENV === 'local' || NODE_ENV === 'development') {
-  module.exports = () => {
-    return mongoose.connect('mongodb://127.0.0.1:27017/test-database')
-  }
-} else {
-  console.log('production mode')
-  // connect database on remote server .
+module.exports = () => {
+  return mongoose.connect(process.env.DATABASE_URI)
 }
+
+// ======================== *TEST* =========================== //
+// if (process.env.NODE_ENV === 'local') {
+//   console.log('development mode')
+// } else {
+//   console.log('production mode')
+// }

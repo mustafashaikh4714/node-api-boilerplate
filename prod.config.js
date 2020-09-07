@@ -1,14 +1,20 @@
 const NodemonPlugin = require('nodemon-webpack-plugin') // Ding
 const nodeExternals = require('webpack-node-externals')
+const path = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const webpack = require('webpack')
+
 module.exports = {
   stats: 'errors-only',
-  mode: 'development',
-  entry: './app.js',
+  mode: 'production',
+  entry: ['./app.js'],
   target: 'node',
-  output: { filename: 'bundle.js' },
+  output: { path: path.join(__dirname, 'dist'), filename: 'bundle.js' },
   externals: [nodeExternals()], // in order to ignore all modules in node_modules folder
   plugins: [
-    new NodemonPlugin() // Dong
+    new CleanWebpackPlugin(),
+    new NodemonPlugin(), // Dong
+    new webpack.ProgressPlugin()
   ],
   module: {
     rules: [
@@ -43,5 +49,19 @@ module.exports = {
       }
     ]
   },
-  devtool: 'source-map'
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        defaultVendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true
+        }
+      }
+    }
+  }
 }

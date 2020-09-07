@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=local webpack --config dev.config.js && env-cmd -f env.dev node ./dist/bundle.js",
-    "start:live": "NODE_ENV=prod webpack --config prod.config.js && env-cmd -f env.prod node ./dist/bundle.js",
+    "start": "NODE_ENV=local webpack --config webpack.dev.js && env-cmd -f env.dev node ./dist/bundle.js",
+    "start:live": "NODE_ENV=prod webpack --config webpack.prod.js && env-cmd -f env.prod node ./dist/bundle.js",
     "dev-server": "NODE_ENV=local PORT=9000 nodemon -r esm app.js",
     "prod-server": "NODE_ENV=prod PORT=9000 nodemon -r esm app.js",
     "dev-local": "NODE_ENV=local PORT=9000 env-cmd -f env.dev nodemon -r esm app.js",
@@ -30,6 +30,8 @@
     "husky": "^4.3.0",
     "nodemon-webpack-plugin": "^4.3.2",
     "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.1.3",
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {

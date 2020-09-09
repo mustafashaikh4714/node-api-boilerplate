@@ -1,4 +1,5 @@
+import userAccount from './user/controllers/user.account'
+
 module.exports = (app, passport) => {
-  // HERE YOU CAN WRITE YOUR API CALLS.
-  // YOU CAN ALSO SPLIT APIS INTO MULTIPLE FILES FOR MORE COMPLEX APPLICATIONS.
+  userAccount(app, passport)
 }

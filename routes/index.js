@@ -1,4 +1,4 @@
-import userAccount from './user/controllers/user.account'
+import userAccount from './user/apis/user.account'
 
 module.exports = (app, passport) => {
   userAccount(app, passport)

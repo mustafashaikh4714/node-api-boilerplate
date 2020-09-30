@@ -1,38 +1,31 @@
 import bcrypt from 'bcryptjs'
 import validator from 'validator'
-import User from '../../../models/User'
-import genToken from '../../../utils/genToken'
-import getHash from '../../../utils/getHash'
+import User from '../../models/User'
+import genToken from '../../utils/genToken'
 export default (app, passport) => {
+  app.get('/api/get/user', async (req, res) => {
+    const user = await User.findOne({ email: 'mustafa@gmail.com' })
+    return res.send(user)
+  })
   app.post('/api/user/create', async (req, res) => {
     const { username, email, password } = req.body
-
-    if (!email || !password) {
-      return res.status(400).send({ message: 'Some fields are missing!' })
-    }
-
-    if (!validator.isEmail(email)) {
-      return res.status(400).send({ message: 'Invalid email!' })
-    }
 
     const doesUserAlreadyExist = await User.findOne({ email })
     if (doesUserAlreadyExist) {
       return res.status(400).send({ message: 'User already exists!' })
     }
 
-    const hashPassword = await getHash(password)
-    const createUser = await new User({
+    const user = new User({
       username,
       email,
-      password: hashPassword
-    }).save()
+      password
+    })
 
-    if (!createUser) {
-      return res.status(400).send({
-        message: 'Something went wrong, Unable to create user!'
-      })
+    try {
+      await user.save()
+    } catch (error) {
+      return res.status(400).send({ message: error.message })
     }
-
     res.send({ message: 'User created successfully.' })
   })
 

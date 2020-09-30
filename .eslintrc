@@ -15,7 +15,8 @@
   "rules": {
     "semi": ["warn", "never"],
     "no-unreachable": "warn",
-    "valid-typeof": "warn",
+    "no-undef": "error",
+    "valid-typeof": "error",
     "eqeqeq": "warn",
     "camelcase": [
       "warn",
@@ -23,14 +24,18 @@
         "ignoreDestructuring": true
       }
     ],
-    "indent": ["warn", 2],
-    "no-nested-ternary": "warn",
-    "no-const-assign": "warn",
+    // "indent": ["warn", 2],
+    "no-nested-ternary": "off",
+    "no-const-assign": "error",
     "no-dupe-class-members": "warn",
     "no-duplicate-imports": "warn",
     "no-var": "warn",
     "prefer-arrow-callback": "warn",
     "prefer-template": "warn",
-    "no-console": "warn"
+    "no-console": "off",
+    "no-param-reassign": "warn",
+    "default-param-last": "error",
+    "no-unused-vars": "warn"
+    // "no-async-promise-executor": "off"
   }
 }

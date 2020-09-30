@@ -5,8 +5,15 @@ mongoose.set('useFindAndModify', false)
 mongoose.set('useCreateIndex', true)
 mongoose.set('useUnifiedTopology', true)
 
-module.exports = () => {
-  return mongoose.connect(process.env.DATABASE_URI)
+export const connectToDB = async () => {
+  await mongoose.connect(process.env.DATABASE_URI)
+
+  console.log('\n✔️✔️  DB')
+  console.log(
+    `✔️✔️  ${process.env.NODE_ENV[0].toUpperCase()}${process.env.NODE_ENV.slice(
+      1
+    )}`
+  )
 }
 
 // ======================== *TEST* =========================== //

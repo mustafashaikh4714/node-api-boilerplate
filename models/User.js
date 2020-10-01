@@ -1,5 +1,6 @@
 /* eslint-disable prefer-arrow-callback */
 import mongoose, { Schema } from 'mongoose'
+import cleanDoc from '../utils/cleanDoc'
 import getHash from '../utils/getHash'
 
 const UserSchema = new Schema(
@@ -10,13 +11,7 @@ const UserSchema = new Schema(
   },
   {
     timestamps: true,
-    toJSON: {
-      transform(_, doc) {
-        doc.id = doc._id
-        delete doc._id
-        delete doc.__v
-      }
-    }
+    toJSON: cleanDoc()
   }
 )
 

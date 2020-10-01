@@ -1,25 +1,35 @@
 import bcrypt from 'bcryptjs'
-import validator from 'validator'
+import clean from 'clean-deep'
 import User from '../../models/User'
+import { LoginSchema, SignupSchema } from '../../schema/user.schema'
 import genToken from '../../utils/genToken'
+import validate from '../../utils/validator'
 export default (app, passport) => {
   app.get('/api/get/user', async (req, res) => {
-    const user = await User.findOne({ email: 'mustafa@gmail.com' })
+    const user = await User.findOne({ email: 'mustafaa@gmail.com' })
     return res.send(user)
   })
   app.post('/api/user/create', async (req, res) => {
-    const { username, email, password } = req.body
+    const { username, email, password } = clean(req.body)
 
-    const doesUserAlreadyExist = await User.findOne({ email })
-    if (doesUserAlreadyExist) {
-      return res.status(400).send({ message: 'User already exists!' })
-    }
-
-    const user = new User({
+    const { values, error } = validate(SignupSchema, {
       username,
       email,
       password
     })
+
+    if (error) {
+      return res.status(400).send({ message: error })
+    }
+
+    console.log('after validation')
+
+    const doesUserAlreadyExist = await User.findOne({ email: values.email })
+    if (doesUserAlreadyExist) {
+      return res.status(400).send({ message: 'User already exists!' })
+    }
+
+    const user = new User(values)
 
     try {
       await user.save()
@@ -30,23 +40,24 @@ export default (app, passport) => {
   })
 
   app.post('/api/user/login', async (req, res) => {
-    const { email, password } = req.body
+    const { email, password } = clean(req.body)
 
-    if (!email || !password) {
-      return res.status(400).send({ message: 'Some fields are missing!' })
+    const { values, error } = validate(LoginSchema, {
+      email,
+      password
+    })
+
+    if (error) {
+      return res.status(400).send({ message: error })
     }
 
-    if (!validator.isEmail(email)) {
-      return res.status(400).send({ message: 'Invalid email!' })
-    }
-
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email: values.email })
 
     if (!user) {
       return res.status(400).send({ message: 'Invalid credentials!' })
     }
 
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(values.password, user.password)
 
     if (!isMatch) {
       return res.status(400).send({
@@ -55,7 +66,7 @@ export default (app, passport) => {
       })
     }
 
-    const data = { userId: user._id, email: user.email }
+    const data = { userId: user._id, email: values.email }
     const token = genToken(data)
 
     res.send({ message: 'User created successfully.', token })
